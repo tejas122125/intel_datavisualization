@@ -1,0 +1,28 @@
+.sidebar {
+
+    background: linear-gradient(to bottom right, #c410cd, #feb47b); /* Gradient background */
+    color: white;
+    height:100%
+    
+ 
+  }
+  
+  .sidebar h2 {
+    margin-top: 0;
+  }
+  
+  .sidebarList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebarItem {
+    margin: 15px 0;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .sidebarItem:hover {
+    color: #ffd1a4; /* Slightly lighter color on hover */
+  }
+  
