@@ -101,20 +101,16 @@ def t_test(df,x,y):
     t_stat, p_value = ttest_ind(diagnosis_0, diagnosis_1)
     return p_value
 
-
+def info(df):
+    return df.info()
+    
+    
+    
 kdf = pd.read_csv('kidney.csv')
 kdf.drop(columns = ['PatientID', 'DoctorInCharge'], inplace = True)
-# np.round(kdf.describe().T,1)
-# separate categorical data and numerical data
-# Obtain catagorical and numerical columns
-# Catagorical feature → number of unique values < 5
 cat_cols = [col for col in kdf.columns if kdf[col].nunique() < 6]
 num_cols = [col for col in kdf.columns if col not in cat_cols]
 
-for cat in cat_cols:
-    print(cat)
-for num in num_cols:
-    print(num)
 cat_cols.remove("Diagnosis")
 
 
@@ -185,14 +181,16 @@ def plot_percentage_stacked_bar_plotly(df, feature, label):
     # fig.show()
 
 # Plot percentage stacked bar charts for each categorical feature
-
-# allcategoriesfigures  =[] 
-# for feature in cat_cols:
-#    fig =  plot_percentage_stacked_bar_plotly(kdf, feature, 'Diagnosis')
-#    allcategoriesfigures.append(fig)
+def getallcatfig(df,cat_cols):
+    allcategoriesfigures  =[] 
+    for feature in cat_cols:
+        fig =  plot_percentage_stacked_bar_plotly(df, feature, 'Diagnosis')
+        allcategoriesfigures.append(fig)
+    return allcategoriesfigures   
    
    
 def describe_column(df, column_name):
+    
     """
     Returns descriptive statistics for a specific column in a DataFrame.
 
@@ -206,7 +204,11 @@ def describe_column(df, column_name):
     if column_name not in df.columns:
         raise ValueError(f"Column '{column_name}' does not exist in the DataFrame")
     nullcount = df[column_name].isnull().sum()
-    return np.round(df[column_name].describe(),1),nullcount
+    df_x = np.round(df[column_name].describe(),1)
+    df_x['nullcount']  = nullcount
+    return df_x
+
+
 # Define custom colors
 def continuousdata(df,column_name):
   color_discrete_map = {0: '#267E0A', 1: '#A31010'}
@@ -240,6 +242,12 @@ def continuousdata(df,column_name):
   )
   return fig
 
+
+def getallconfigs(df,num_cols):
+    numfigs = []
+    for col in num_cols:
+        numfigs.append(continuousdata(df,col))
+    return numfigs    
   # Show figure
   # fig.show()
 def gettopnfeatures(n,df):
