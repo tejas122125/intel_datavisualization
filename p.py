@@ -32,7 +32,7 @@ def scatter_plot(df,column1,column2="Diagnosis"):
         template='plotly_dark'
     )
     fig.update_traces(marker=dict(size=10, opacity=0.8), selector=dict(mode='markers'))
-    fig.show()
+    # fig.show()
     return fig
 # violin plot
 
@@ -47,7 +47,7 @@ def violin_plot(df,column1,column2):
         color_discrete_map={0: 'green', 1: 'red'},
         template='plotly_dark'
     )
-    fig.show()
+    # fig.show()
     return fig
 
 
@@ -250,10 +250,9 @@ def getallconfigs(df,num_cols):
     return numfigs    
   # Show figure
   # fig.show()
+  
 def gettopnfeatures(n,df):
-
 #  obtaining top 20  related features
-
     corr_matrix =df.corr()
     # corr_matrix.style.background_gradient(cmap='coolwarm')
     diag_corr = []
@@ -418,12 +417,16 @@ def minmaxscaling(df,target = 'Diagnosis'):
     # X_test_scaled_n = pd.concat([X_test_scaled,X_test_cat],axis=1)
     return X_train_scaled,X_test_scaled,y_train,y_test
     
-# df_resamp = oversampling(new_df,"Diagnosis")
-# print(df_resamp['Diagnosis'].value_counts())    
-# X_train_scaled,X_test_scaled,y_train,y_test = minmaxscaling(df_resamp,target='Diagnosis')    
-# clf = RandomForestClassifier(n_estimators=100, random_state=42)
-# clf.fit(X_train_scaled, y_train)
-
-# y_pred = clf.predict(X_test_scaled)
-# # print the classification report
-# print(classification_report(y_test, y_pred))
+def getClassificationReport(df):    
+    
+    df_resamp = oversampling(df,"Diagnosis")
+    print(df_resamp['Diagnosis'].value_counts())    
+    X_train_scaled,X_test_scaled,y_train,y_test = minmaxscaling(df_resamp,target='Diagnosis')    
+    clf = RandomForestClassifier(n_estimators=100, random_state=42)
+    clf.fit(X_train_scaled, y_train)
+    y_pred = clf.predict(X_test_scaled)
+    # print the classification report
+    report = classification_report(y_test, y_pred)
+    print(type(report))
+    
+    return report

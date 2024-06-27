@@ -14,4 +14,6 @@ st.set_page_config(
 
 st.write("# Welcome to Streamlit 👋")
 
+st.markdown("[Go to Page 1](pre)")
+
 st.sidebar.success("Select a demo above.")
